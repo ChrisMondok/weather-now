@@ -1,0 +1,26 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "chris.mondok@gmail.com",
+    "longName": "Weather Now",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "data/generic_weather.pdc",
+                "name": "GENERIC_WEATHER",
+                "targetPlatforms": null,
+                "type": "raw"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Weather Now",
+    "uuid": "7777626c-f4f3-4748-9ebd-7b80fc7a3043",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": false
+    }
+}

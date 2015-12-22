@@ -5,6 +5,9 @@
 #define LOADING_BG GColorChromeYellow
 #define LOADING_FG GColorBlack
 
-#define ANIMATION_DURATION 2000
+#define ANIMATION_DURATION 500
 
 #define ICON_SIZE 25
+
+#define KEY_TEMPERATURE 0
+#define KEY_SUMMARY 1

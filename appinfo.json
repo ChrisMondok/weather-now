@@ -1,5 +1,8 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "KEY_SUMMARY": 1,
+        "KEY_TEMPERATURE": 0
+    },
     "capabilities": [
         ""
     ],
@@ -18,6 +21,10 @@
     },
     "sdkVersion": "3",
     "shortName": "Weather Now",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
     "uuid": "7777626c-f4f3-4748-9ebd-7b80fc7a3043",
     "versionLabel": "1.0",
     "watchapp": {

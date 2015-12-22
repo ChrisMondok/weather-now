@@ -11,6 +11,7 @@ WeatherLayer *weather_layer;
 bool wants_weather = false;
 
 static void arrange_layers(void) {
+	APP_LOG(APP_LOG_LEVEL_INFO, "Arrange layers");
 	GRect window_frame = layer_get_frame(window_get_root_layer(main_window));
 	
 	uint16_t split = window_frame.size.h - (wants_weather ? weather_layer_get_content_size(weather_layer).h : 0);
@@ -20,18 +21,33 @@ static void arrange_layers(void) {
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
+	APP_LOG(APP_LOG_LEVEL_INFO, "Tick handler");
 	wants_weather = true;
 	arrange_layers();
+	layer_mark_dirty(time_layer);
+}
+
+static void process_tuple(Tuple *tuple) {
+	switch(tuple->key) {
+	case KEY_TEMPERATURE:
+		weather_layer_set_temperature(weather_layer, tuple->value->int8);
+		break;
+	case KEY_SUMMARY:
+		weather_layer_set_summary(weather_layer, tuple->value->cstring);
+		break;
+	case KEY_ICON:
+		weather_layer_set_icon(weather_layer, tuple->value->uint8);
+		break;
+	}
 }
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-	Tuple *temp_tuple = dict_find(iterator, KEY_TEMPERATURE);
-	Tuple *summary_tuple = dict_find(iterator, KEY_SUMMARY);
-	
-	if(temp_tuple)
-		weather_layer_set_temperature(weather_layer, temp_tuple->value->int8);
-	if(summary_tuple)
-		weather_layer_set_summary(weather_layer, summary_tuple->value->cstring);
+	APP_LOG(APP_LOG_LEVEL_INFO, "Inbox received callback");
+	Tuple *tuple = dict_read_first(iterator);
+	while(tuple != NULL) {
+		process_tuple(tuple);
+		tuple = dict_read_next(iterator);
+	}
 }
 
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {
@@ -48,6 +64,7 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 
 static void handle_init(void) {
   main_window = window_create();
+  window_stack_push(main_window, true);
 	
 	Layer* root = window_get_root_layer(main_window);
 	GRect frame = layer_get_frame(root);
@@ -59,7 +76,6 @@ static void handle_init(void) {
 	
 	layer_add_child(root, time_layer);
 	layer_add_child(root, weather_layer_get_layer(weather_layer));
-  window_stack_push(main_window, true);
 	
 	arrange_layers();
 	
@@ -97,6 +113,10 @@ static void arrange_weather_layer(GRect bounds, uint16_t split) {
 
 static void handle_deinit(void) {
   layer_destroy(time_layer);
+	
+	//TODO: figure out how to free the 860 bytes allocated by app_message_open
+	app_message_deregister_callbacks();
+	
 	weather_layer_destroy(weather_layer);
   window_destroy(main_window);
 }

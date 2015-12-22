@@ -16,21 +16,52 @@ WeatherLayer* weather_layer_create(GRect frame) {
 	
 	WeatherLayer* weather_layer = (WeatherLayer*) malloc(sizeof(WeatherLayer));
 	
-	weather_layer_set_summary(weather_layer, "Hang tight...");
-	weather_layer_set_temperature(weather_layer, 0);
-	weather_layer_set_icon(weather_layer);
+	weather_layer->icon = gdraw_command_image_create_with_resource(RESOURCE_ID_GENERIC_QUESTION);
 	
 	Layer* root = weather_layer->root_layer = layer_create_with_data(frame, sizeof(WeatherLayer**));
 	WeatherLayer** data = (WeatherLayer**)layer_get_data(root);
 	*data = weather_layer;
 	
-	layer_set_update_proc(root, update_weather_layer);
+	APP_LOG(APP_LOG_LEVEL_INFO, "Setting weather layer update proc");
+	layer_set_update_proc(weather_layer_get_layer(weather_layer), update_weather_layer);
+	
+	weather_layer_set_summary(weather_layer, "Hang tight...");
+	weather_layer_set_temperature(weather_layer, 0);
+	weather_layer_set_icon(weather_layer, 1);
 	
 	return weather_layer;
 }
 
-void weather_layer_set_icon(WeatherLayer* wl) {
-	wl->icon = gdraw_command_image_create_with_resource(RESOURCE_ID_GENERIC_WEATHER);
+static uint32_t look_up_icon(uint8_t icon) {
+	switch (icon) {
+		case 0:
+			return RESOURCE_ID_CLOUDY_DAY;
+		case 1:
+			return RESOURCE_ID_GENERIC_QUESTION;
+		case 2:
+			return RESOURCE_ID_GENERIC_WEATHER;
+		case 3:
+			return RESOURCE_ID_HEAVY_RAIN;
+		case 4:
+			return RESOURCE_ID_HEAVY_SNOW;
+		case 5:
+			return RESOURCE_ID_LIGHT_RAIN;
+		case 6:
+			return RESOURCE_ID_PARTLY_CLOUDY;
+		case 7:
+			return RESOURCE_ID_RAINING_AND_SNOWING;
+		case 8:
+			return RESOURCE_ID_SUNNY_DAY;
+		case 9:
+			return RESOURCE_ID_SUNSET;
+		default:
+		return RESOURCE_ID_GENERIC_WEATHER;
+	}
+}
+
+void weather_layer_set_icon(WeatherLayer* wl, uint8_t icon) {
+	gdraw_command_image_destroy(wl->icon);
+	wl->icon = gdraw_command_image_create_with_resource(look_up_icon(icon));
 	GSize icon_size = gdraw_command_image_get_bounds_size(wl->icon);
 	wl->middle_column_width = icon_size.w + 2 * padding;
 	wl->icon_height = icon_size.h;

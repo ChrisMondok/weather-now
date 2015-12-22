@@ -11,3 +11,4 @@
 
 #define KEY_TEMPERATURE 0
 #define KEY_SUMMARY 1
+#define KEY_ICON 2

@@ -1,16 +1,71 @@
 {
     "appKeys": {
+        "KEY_ICON": 2,
         "KEY_SUMMARY": 1,
         "KEY_TEMPERATURE": 0
     },
     "capabilities": [
-        ""
+        "location"
     ],
     "companyName": "chris.mondok@gmail.com",
     "longName": "Weather Now",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "data/generic_question.pdc",
+                "name": "GENERIC_QUESTION",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/partly_cloudy.pdc",
+                "name": "PARTLY_CLOUDY",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/cloudy_day.pdc",
+                "name": "CLOUDY_DAY",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/raining_and_snowing.pdc",
+                "name": "RAINING_AND_SNOWING",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/sunset.pdc",
+                "name": "SUNSET",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/sunny_day.pdc",
+                "name": "SUNNY_DAY",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/heavy_snow.pdc",
+                "name": "HEAVY_SNOW",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/heavy_rain.pdc",
+                "name": "HEAVY_RAIN",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
+            {
+                "file": "data/light_rain.pdc",
+                "name": "LIGHT_RAIN",
+                "targetPlatforms": null,
+                "type": "raw"
+            },
             {
                 "file": "data/generic_weather.pdc",
                 "name": "GENERIC_WEATHER",
@@ -28,6 +83,6 @@
     "uuid": "7777626c-f4f3-4748-9ebd-7b80fc7a3043",
     "versionLabel": "1.0",
     "watchapp": {
-        "watchface": false
+        "watchface": true
     }
 }

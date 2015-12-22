@@ -18,7 +18,7 @@ Layer* weather_layer_get_layer(WeatherLayer* weather_layer);
 
 void update_weather_layer(Layer* layer, GContext* ctx);
 
-void weather_layer_set_icon(WeatherLayer* weather_layer);
+void weather_layer_set_icon(WeatherLayer* weather_layer, uint8_t icon);
 
 void weather_layer_set_temperature(WeatherLayer* weather_layer, int8_t temperature);
 
